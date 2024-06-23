@@ -15,7 +15,7 @@ interface ModalProps {
   actionLabel: string;
   disabled?: boolean;
   secondaryAction?: () => void;
-  secondaryLabel?: string;
+  secondaryActionLabel?: string;
 }
 
 const Modal = ({
@@ -28,7 +28,7 @@ const Modal = ({
   actionLabel,
   disabled,
   secondaryAction,
-  secondaryLabel,
+  secondaryActionLabel,
 }: ModalProps) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -86,8 +86,19 @@ const Modal = ({
             {/* FOOTER */}
             <div className="flex flex-col gap-2 p-6">
               <div className="flex flex-row items-center gap-4 w-full">
-                <Button label="First Button" />
-                <Button label="Second Button" outline icon={AiOutlineFullscreenExit} />
+                {secondaryActionLabel && secondaryAction && (
+                  <Button
+                    outline
+                    disabled={disabled}
+                    label={secondaryActionLabel}
+                    onClick={secondaryAction}
+                  />
+                )}
+                <Button
+                  disabled={disabled}
+                  label={actionLabel}
+                  onClick={handleSubmit}
+                />
               </div>
             </div>
           </div>

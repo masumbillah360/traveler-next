@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <Modal isOpen title="Login Form" />
+        <Modal isOpen title="Login Form" actionLabel="Submit" />
         {children}
       </body>
     </html>
