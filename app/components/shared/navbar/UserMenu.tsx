@@ -7,7 +7,7 @@ import MenuItem from "../../ui/MenuItem";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 const UserMenu = () => {
-  const { isOpen, onOpen } = useRegisterModal();
+  const registerModal = useRegisterModal();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
@@ -17,7 +17,7 @@ const UserMenu = () => {
           Your Home
         </div>
         <div
-          onClick={() => setIsMenuOpen(!isOpen)}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-300 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
         >
           <AiOutlineMenu />
@@ -34,8 +34,14 @@ const UserMenu = () => {
         >
           <div className="flex flex-col cursor-pointer">
             <>
-              <MenuItem label="Login" onClick={() => onOpen()} />
-              <MenuItem label="Sign UP" onClick={() => onOpen()} />
+              <MenuItem label="Login" onClick={() => {}} />
+              <MenuItem
+                label="Sign UP"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  registerModal.onOpen();
+                }}
+              />
             </>
           </div>
         </div>

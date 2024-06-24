@@ -67,7 +67,11 @@ const Modal = ({
       return;
     }
     secondaryAction();
-  }, [disabled, secondaryAction]);
+    setShowModal(false);
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  }, [disabled, secondaryAction, onClose]);
   if (!isOpen) return null;
 
   const handleRefClose = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -113,7 +117,7 @@ const Modal = ({
                     outline
                     disabled={disabled}
                     label={secondaryActionLabel}
-                    onClick={secondaryAction}
+                    onClick={handleSecondaryAction}
                   />
                 )}
                 <Button
