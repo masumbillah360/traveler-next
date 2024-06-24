@@ -9,12 +9,15 @@ import { FcGoogle } from "react-icons/fc";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import useRegisterModal from "@/app/hooks/useRegisterModal";
+import toast from "react-hot-toast";
+
 import Modal from "./Modal";
 import Heading from "../ui/Heading";
+import Button from "../ui/Button";
 import Input from "../ui/inputs/Input";
 
 const RegisterModal = () => {
-  const { isOpen, onClose, onOpen } = useRegisterModal();
+  const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -34,9 +37,9 @@ const RegisterModal = () => {
     try {
       const response = await axios.post("/api/auth/register", data);
       console.log(response);
-      onClose();
-    } catch (error) {
-      console.error(error);
+      registerModal.onClose();
+    } catch (error: any) {
+      toast.error("Something went wrong!");
     } finally {
       setIsLoading(false);
     }
@@ -45,21 +48,74 @@ const RegisterModal = () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Welcome To Traveler" subtitle="Create an account!" />
-      <Input id="email" label="Email" disabled={isLoading} register={register} errors={errors} />
+      <Input
+        required
+        id="email"
+        label="Email"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+      />
+      <Input
+        required
+        id="name"
+        label="Name"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+      />
+      <Input
+        required
+        id="password"
+        label="Password"
+        type="password"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+      />
+    </div>
+  );
+
+  const footerContent = (
+    <div className="flex flex-col gap-4 mt-3">
+      <hr />
+      <Button
+        onClick={() => {}}
+        disabled={isLoading}
+        outline
+        icon={FcGoogle}
+        label="Continue With Google"
+      />
+      <Button
+        onClick={() => {}}
+        disabled={isLoading}
+        outline
+        icon={AiFillGithub}
+        label="Continue With Github"
+      />
+      <div className="mt-4 font-light text-center text-neutral-500">
+        <div className="flex flex-row items-center justify-center gap-2">
+          <div> Already have an account? </div>
+          <div
+          onClick={() => {registerModal.onClose()}}
+           className="text-neutral-800 font-semibold cursor-pointer hover:underline">Login</div>
+        </div>
+      </div>
     </div>
   );
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={registerModal.isOpen}
       disabled={isLoading}
       title="Register An Account"
       actionLabel="Submit"
-      onSubmit={() => handleSubmit(onSubmit)}
-      onClose={onClose}
+      onSubmit={handleSubmit(onSubmit)}
+      onClose={registerModal.onClose}
       secondaryActionLabel="Cancel"
       secondaryAction={() => {}}
       body={bodyContent}
+      footer={footerContent}
     />
   );
 };
