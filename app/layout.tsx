@@ -5,6 +5,7 @@ import Navbar from "./components/shared/navbar/Navbar";
 import Modal from "./components/modals/Modal";
 
 import "./globals.css";
+import RegisterModal from "./components/modals/RegisterModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Modal isOpen title="Login Form" actionLabel="Submit" />
+        <RegisterModal />
         <Navbar />
         {children}
       </body>

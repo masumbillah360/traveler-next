@@ -1,10 +1,17 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
-import { IoMdClose, IoMdCloseCircle } from "react-icons/io";
-import Button from "../ui/Button";
-import { AiOutlineFullscreenExit } from "react-icons/ai";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
+// icons
+import { IoMdClose } from "react-icons/io";
+
+// components
+import Button from "../ui/Button";
+
+// hooks
+import useRegisterModal from "@/app/hooks/useRegisterModal";
+
+// modal props interface
 interface ModalProps {
   isOpen?: boolean;
   onClose: () => void;
@@ -18,9 +25,8 @@ interface ModalProps {
   secondaryActionLabel?: string;
 }
 
+// modal component
 const Modal = ({
-  isOpen,
-  onClose,
   onSubmit,
   title,
   body,
@@ -31,6 +37,9 @@ const Modal = ({
   secondaryActionLabel,
 }: ModalProps) => {
   const [showModal, setShowModal] = useState(false);
+  const { isOpen, onClose } = useRegisterModal();
+
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setShowModal(isOpen!);
@@ -61,8 +70,21 @@ const Modal = ({
   }, [disabled, secondaryAction]);
   if (!isOpen) return null;
 
+  const handleRefClose = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === ref.current) {
+      setShowModal(false);
+      setTimeout(() => {
+        onClose();
+      }, 300);
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70">
+    <div
+      ref={ref}
+      onClick={handleRefClose}
+      className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70"
+    >
       <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full md:h-auto">
         <div
           className={`translate duration-300 h-full 
