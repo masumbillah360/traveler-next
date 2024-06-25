@@ -10,6 +10,7 @@ interface ButtonProps {
   outline?: boolean;
   small?: boolean;
   icon?: IconType;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button = ({
@@ -19,9 +20,11 @@ const Button = ({
   outline,
   small,
   icon:Icon,
+  type = "button",
 }: ButtonProps) => {
   return (
     <button
+    type={type}
       onClick={onClick}
       disabled={disabled}
       className={`relative border disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:opacity-80 transition w-full
