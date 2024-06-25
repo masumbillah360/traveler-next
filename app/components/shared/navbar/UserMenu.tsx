@@ -32,7 +32,9 @@ const UserMenu = ({ currentUser }: userMenuProps) => {
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar src="/images/placeholder.jpeg" />
+            <Avatar
+              src={currentUser?.image}
+            />
           </div>
         </div>
       </div>
@@ -50,10 +52,13 @@ const UserMenu = ({ currentUser }: userMenuProps) => {
                 <MenuItem label="Reservation" onClick={() => {}} />
                 <MenuItem label="Properties" onClick={() => {}} />
                 <MenuItem label="Traveler Home" onClick={() => {}} />
-                <MenuItem label="Logout" onClick={() => {
-                  signOut();
-                  toast.success("Logged out successfully!");
-                }} />
+                <MenuItem
+                  label="Logout"
+                  onClick={() => {
+                    signOut();
+                    toast.success("Logged out successfully!");
+                  }}
+                />
               </>
             ) : (
               <>

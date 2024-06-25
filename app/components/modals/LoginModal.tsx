@@ -93,14 +93,14 @@ const LoginModal = () => {
     <div className="flex flex-col gap-4 mt-3">
       <hr />
       <Button
-        onClick={() => {}}
+        onClick={() => signIn("google")}
         disabled={isLoading}
         outline
         icon={FcGoogle}
         label="Continue With Google"
       />
       <Button
-        onClick={() => {}}
+        onClick={() => signIn("github")}
         disabled={isLoading}
         outline
         icon={AiFillGithub}
