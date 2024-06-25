@@ -38,7 +38,6 @@ const LoginModal = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
     setIsLoading(true);
     const formData = new FormData();
     formData.append("email", data.email);
@@ -56,7 +55,6 @@ const LoginModal = () => {
           setIsLoading(false);
         }
         if (cb?.error) {
-          console.log(["ERROR"], cb.error);
           toast.error(cb.error.toString());
           setIsLoading(false);
         }
