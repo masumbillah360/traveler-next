@@ -1,23 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import { AiFillGithub } from "react-icons/ai";
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import { AiFillGithub } from "react-icons/ai";
 
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
-import toast from "react-hot-toast";
-// import {authenticate} from "@/app/actions/signIn"
-import Modal from "./Modal";
-import Heading from "../ui/Heading";
-import Button from "../ui/Button";
-import Input from "../ui/inputs/Input";
-import { signIn } from "next-auth/react";
 
+import Modal from "./Modal";
+import Button from "../ui/Button";
+import Heading from "../ui/Heading";
+import Input from "../ui/inputs/Input";
 
 
 const LoginModal = () => {
@@ -27,6 +26,7 @@ const LoginModal = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -38,24 +38,31 @@ const LoginModal = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data)
+    console.log(data);
     setIsLoading(true);
     const formData = new FormData();
-    formData.append("email", data.email)
-    formData.append("password", data.password)
+    formData.append("email", data.email);
+    formData.append("password", data.password);
     try {
-      // await authenticate(formData);
-      signIn('credentials', {...data, redirect: false}).then((cb) => {
-        if(cb?.ok) {
+      signIn("credentials", { ...data, redirect: false }).then((cb) => {
+        if (cb?.ok) {
           toast.success("Login successful!");
-          // router.refresh();
           loginModal.onClose();
-        } if(cb?.error) {
-          toast.error(cb.error)
+          reset({
+            email: "",
+            password: "",
+          });
+          router.refresh();
+          setIsLoading(false);
+        }
+        if (cb?.error) {
+          console.log(["ERROR"], cb.error);
+          toast.error(cb.error.toString());
+          setIsLoading(false);
         }
       });
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
       setIsLoading(false);
       toast.error("Failed to login!");
     }
