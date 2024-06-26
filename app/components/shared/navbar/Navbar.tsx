@@ -4,8 +4,10 @@ import Search from "./Search";
 import UserMenu from "./UserMenu";
 import Container from "../../ui/Container";
 
+
 // imported user type
 import { User } from "@prisma/client";
+import Categories from "./Categories";
 
 interface NavbarProps {
   currentUser?: User | null;
@@ -24,6 +26,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
           </div>
         </Container>
       </div>
+      <Categories />
     </div>
   );
 };
