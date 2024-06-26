@@ -2,7 +2,7 @@
 
 import toast from "react-hot-toast";
 import { User } from "@prisma/client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { signOut } from "next-auth/react";
 import { AiOutlineMenu } from "react-icons/ai";
 
@@ -10,20 +10,33 @@ import Avatar from "../../ui/Avatar";
 import MenuItem from "../../ui/MenuItem";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useRentModal from "@/app/hooks/useRentModal";
 
 interface userMenuProps {
   currentUser?: User | null;
 }
 
 const UserMenu = ({ currentUser }: userMenuProps) => {
-  const registerModal = useRegisterModal();
+  const rentModal = useRentModal();
   const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
+
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+    rentModal.onOpen();
+  }, [currentUser, loginModal, rentModal]);
 
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3 w-full">
-        <div className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
+        <div
+          onClick={onRent}
+          className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
+        >
           Your Home
         </div>
         <div
@@ -32,9 +45,7 @@ const UserMenu = ({ currentUser }: userMenuProps) => {
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar
-              src={currentUser?.image}
-            />
+            <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>
@@ -51,7 +62,7 @@ const UserMenu = ({ currentUser }: userMenuProps) => {
                 <MenuItem label="Favorites" onClick={() => {}} />
                 <MenuItem label="Reservation" onClick={() => {}} />
                 <MenuItem label="Properties" onClick={() => {}} />
-                <MenuItem label="Traveler Home" onClick={() => {}} />
+                <MenuItem label="Traveler Home" onClick={rentModal.onOpen} />
                 <MenuItem
                   label="Logout"
                   onClick={() => {
