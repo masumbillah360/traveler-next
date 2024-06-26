@@ -106,7 +106,7 @@ const Categories = () => {
 
   return (
     <Container>
-      <div className="flex flex-row items-center justify-between pt-4 scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-h-0 scrollbar-w-0 scrollbar-corner-rose-500 scrollbar scrollbar-thumb-rose-500 scrollbar-track-slate-300 overflow-scroll overflow-x-scroll overflow-y-hidden">
+      <div className="flex flex-row items-center justify-between pt-4 scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-h-0 scrollbar-w-0 scrollbar-corner-rose-500 scrollbar scrollbar-thumb-rose-500 scrollbar-track-slate-300 overflow-scroll overflow-x-auto overflow-y-hidden">
         {categories.map(({ label, icon, description }) => (
           <CategoryBox
             key={label + "Nav"}

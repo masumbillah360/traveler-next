@@ -66,8 +66,8 @@ const RentModal = () => {
     () =>
       dynamic(() => import("../ui/Map"), {
         ssr: false,
-        // eslint-disable-next-line react-hooks/exhaustive-deps
       }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [location]
   );
 
