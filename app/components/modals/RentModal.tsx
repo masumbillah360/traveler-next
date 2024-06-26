@@ -1,17 +1,19 @@
 "use client";
 
-import Modal from "./Modal";
-import Heading from "../ui/Heading";
+import dynamic from "next/dynamic";
 import React, { useMemo, useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+
 import useRentModal from "@/app/hooks/useRentModal";
+
+import Modal from "./Modal";
+import Counter from "../ui/Counter";
+import Heading from "../ui/Heading";
+import Input from "../ui/inputs/Input";
+import ImageUpload from "../ui/inputs/ImageUpload";
+import CountrySelect from "../ui/inputs/CountrySelect";
 import CategoryInput from "../ui/inputs/CategoryInput";
 import { categories } from "../shared/navbar/Categories";
-import { FieldValues, useForm } from "react-hook-form";
-import CountrySelect from "../ui/inputs/CountrySelect";
-import Map from "../ui/Map";
-import dynamic from "next/dynamic";
-import Counter from "../ui/Counter";
-import ImageUpload from "../ui/inputs/ImageUpload";
 
 enum STEPS {
   CATEGORY = 0,
@@ -26,6 +28,7 @@ const RentModal = () => {
   const rentModal = useRentModal();
 
   const [step, setStep] = useState(STEPS.CATEGORY);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -58,10 +61,14 @@ const RentModal = () => {
   const title = watch("title");
   const description = watch("description");
 
-  const Map = useMemo(() => dynamic(() => import('../ui/Map'), {
-    ssr: false,
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [location])
+  const Map = useMemo(
+    () =>
+      dynamic(() => import("../ui/Map"), {
+        ssr: false,
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }),
+    [location]
+  );
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -129,7 +136,7 @@ const RentModal = () => {
     );
   }
 
-  if(step === STEPS.INFO) {
+  if (step === STEPS.INFO) {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
@@ -158,14 +165,39 @@ const RentModal = () => {
     );
   }
 
-  if(step === STEPS.IMAGES) {
+  if (step === STEPS.IMAGES) {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
           title="Add a photo of your place"
           subtitle="Help guests to get a better view!"
         />
-        <ImageUpload value={imageSrc} onChange={(value) => setCustomValue('imageSrc', value)} />
+        <ImageUpload
+          value={imageSrc}
+          onChange={(value) => setCustomValue("imageSrc", value)}
+        />
+      </div>
+    );
+  }
+  if (step === STEPS.DESCRIPTION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Describe your place"
+          subtitle="What makes your place special?"
+        />
+        <Input id="title" label="Title" disabled={isLoading} register={register} errors={errors} required />
+        <textarea
+          className="border-2 focus:border-black px-2 py-1 rounded resize-none"
+          rows={7}
+          placeholder="Description"
+          {...register("description", { required: true })}
+          value={description}
+          onChange={(e) => setCustomValue("description", e.target.value)}
+        />
+        {errors.description && (
+          <p className="text-red-500">Description is required</p>
+        )}
       </div>
     );
   }
