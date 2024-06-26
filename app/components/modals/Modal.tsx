@@ -65,11 +65,11 @@ const Modal = ({
       return;
     }
     secondaryAction();
-    setShowModal(false);
-    setTimeout(() => {
-      onClose();
-    }, 300);
-  }, [disabled, secondaryAction, onClose]);
+    // setShowModal(false);
+    // setTimeout(() => {
+    //   onClose();
+    // }, 300);
+  }, [disabled, secondaryAction]);
   if (!isOpen) return null;
 
   const handleRefClose = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -93,44 +93,42 @@ const Modal = ({
             ${showModal ? "translate-y-0" : "translate-y-full"}
             ${showModal ? "opacity-100" : "opacity-0"}`}
         >
-          <form onSubmit={handleSubmit}>
-            <div className="translate h-full lg:h-auto md:h-auto border-0 rounded-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-              {/* HEADER */}
-              <div className="flex items-center justify-center p-6 rounded-t relative border-b-[1px]">
-                <button
-                  type="button"
-                  onClick={handleClose}
-                  className="p-1 hover:bg-white hover:text-rose-500 transition duration-500 absolute -right-3 -top-5 rounded-full border-2 border-white hover:border-rose-500 text-white bg-rose-500 h-8 w-8 flex justify-center items-center"
-                >
-                  <IoMdClose className="size-full" />
-                </button>
-                <div className="text-lg font-semibold">{title}</div>
-              </div>
-              {/* BODY */}
-              <div className="relative p-6 flex-auto">{body}</div>
-              {/* FOOTER */}
-              <div className="flex flex-col gap-2 p-6">
-                <div className="flex flex-row items-center gap-4 w-full">
-                  {secondaryActionLabel && secondaryAction && (
-                    <Button
-                      outline
-                      disabled={disabled}
-                      label={secondaryActionLabel}
-                      onClick={handleSecondaryAction}
-                    />
-                  )}
-
-                  <Button
-                    type="submit"
-                    disabled={disabled}
-                    label={actionLabel}
-                    onClick={handleSubmit}
-                  />
-                </div>
-                {footer}
-              </div>
+          <div className="translate h-full lg:h-auto md:h-auto border-0 rounded-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            {/* HEADER */}
+            <div className="flex items-center justify-center p-6 rounded-t relative border-b-[1px]">
+              <button
+                type="button"
+                onClick={handleClose}
+                className="p-1 hover:bg-white hover:text-rose-500 transition duration-500 absolute -right-3 -top-5 rounded-full border-2 border-white hover:border-rose-500 text-white bg-rose-500 h-8 w-8 flex justify-center items-center"
+              >
+                <IoMdClose className="size-full" />
+              </button>
+              <div className="text-lg font-semibold">{title}</div>
             </div>
-          </form>
+            {/* BODY */}
+            <div className="relative p-6 flex-auto">{body}</div>
+            {/* FOOTER */}
+            <div className="flex flex-col gap-2 p-6">
+              <div className="flex flex-row items-center gap-4 w-full">
+                {secondaryActionLabel && secondaryAction && (
+                  <Button
+                    outline
+                    disabled={disabled}
+                    label={secondaryActionLabel}
+                    onClick={handleSecondaryAction}
+                  />
+                )}
+
+                <Button
+                  type="submit"
+                  disabled={disabled}
+                  label={actionLabel}
+                  onClick={handleSubmit}
+                />
+              </div>
+              {footer}
+            </div>
+          </div>
         </div>
       </div>
     </div>
