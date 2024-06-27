@@ -7,7 +7,7 @@ import Button from "../components/ui/Button";
 interface ListingReservationProps {
   price: number;
   totalPrice: number;
-  onChangeDate: (value: any) => void;
+  onChangeDate: (value: Range) => void;
   dateRange: Range;
   onSubmit: () => void;
   disabled?: boolean;
@@ -33,7 +33,7 @@ const ListingReservation = ({
       <Calender
         value={dateRange}
         disabledDates={disabledDates}
-        onChange={(value) => onChangeDate(value)}
+        onChange={(value) => onChangeDate(value.selection)}
       />
       <hr />
       <div className="p-4">

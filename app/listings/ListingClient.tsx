@@ -8,11 +8,7 @@ import ListingHead from "./ListingHead";
 import ListingInfo from "./ListingInfo";
 import useLoginModal from "../hooks/useLoginModal";
 import { useRouter } from "next/navigation";
-import {
-  differenceInCalendarDays,
-  differenceInDays,
-  eachDayOfInterval,
-} from "date-fns";
+import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
 import axios from "axios";
 import toast from "react-hot-toast";
 import ListingReservation from "./ListingReservation";
@@ -61,7 +57,7 @@ const ListingClient = ({
     }
     setIsLoading(true);
     axios
-      .post("/api/reservations", {
+      .post("/api/reservation", {
         totalPrice,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
@@ -70,8 +66,9 @@ const ListingClient = ({
       .then(() => {
         toast.success("Reservation created successfully!");
         setDateRange(initialDateRange);
-        setTotalPrice(listing.price);
-        router.push(`/listing/${listing.id}`);
+        // setTotalPrice(listing.price);
+        // router.push(`/listing/${listing.id}`);
+        router.refresh();
       })
       .catch(() => {
         toast.error("Failed to create reservation");
@@ -84,7 +81,6 @@ const ListingClient = ({
     dateRange.startDate,
     dateRange.endDate,
     listing.id,
-    listing.price,
     loginModal,
     totalPrice,
     router,
@@ -92,8 +88,8 @@ const ListingClient = ({
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {
       const dayCount = differenceInCalendarDays(
-        dateRange.startDate,
-        dateRange.endDate
+        dateRange.endDate,
+        dateRange.startDate
       );
       if (dayCount && listing.price) {
         setTotalPrice(dayCount * listing.price);
