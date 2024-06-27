@@ -5,10 +5,7 @@ import { NextResponse } from "next/server";
 interface IParams {
   listingId?: string;
 }
-export default async function POST(
-  req: Request,
-  { params }: { params: IParams }
-) {
+export async function POST(req: Request, { params }: { params: IParams }) {
   const currentUser = await getCurrentUser();
   if (!currentUser) {
     return new Response("Unauthorized", { status: 401 });
