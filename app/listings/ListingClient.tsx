@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { categories } from "../components/shared/navbar/Categories";
 import Container from "../components/ui/Container";
 import ListingHead from "./ListingHead";
+import ListingInfo from "./ListingInfo";
 export type ListingWithUser = Listing & { user: User };
 
 interface IListing {
@@ -37,6 +38,17 @@ const ListingClient = ({ listing, currentUser }: IListing) => {
             imageSrc={listing.imageSrc}
             locationValue={listing.locationValue}
           />
+          <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 gap-6">
+            <ListingInfo
+              user={listing.user}
+              category={category}
+              description={listing.description}
+              roomCount={listing.roomCount}
+              guestCount={listing.guestCount}
+              bathroomCount={listing.bathroomCount}
+              locationValue={listing.locationValue}
+            />
+          </div>
         </div>
       </div>
     </Container>
