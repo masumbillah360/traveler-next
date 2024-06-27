@@ -2,7 +2,7 @@ import Container from "./components/ui/Container";
 import EmptyState from "./components/ui/EmptyState";
 
 export default function Home() {
-  const isEmpty = true;
+  const isEmpty = false;
   if (isEmpty) {
     return <EmptyState showReset />;
   }
