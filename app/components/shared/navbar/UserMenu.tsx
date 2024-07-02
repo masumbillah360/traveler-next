@@ -60,9 +60,18 @@ const UserMenu = ({ currentUser }: userMenuProps) => {
             {currentUser ? (
               <>
                 <MenuItem label="Trips" onClick={() => router.push("/trips")} />
-                <MenuItem label="Favorites" onClick={() => router.push("/favorites") } />
-                <MenuItem label="Reservation" onClick={() => router.push("/reservations")} />
-                <MenuItem label="Properties" onClick={() => {}} />
+                <MenuItem
+                  label="Favorites"
+                  onClick={() => router.push("/favorites")}
+                />
+                <MenuItem
+                  label="Reservation"
+                  onClick={() => router.push("/reservations")}
+                />
+                <MenuItem
+                  label="Properties"
+                  onClick={() => router.push("/properties")}
+                />
                 <MenuItem label="Traveler Home" onClick={rentModal.onOpen} />
                 <MenuItem
                   label="Logout"
