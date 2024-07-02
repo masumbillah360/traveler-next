@@ -18,6 +18,7 @@ const TripsPage = async () => {
       />
     );
   }
+  reservations[0].listing
   return <TripsClient reservations={reservations} currentUser={currentUser} />;
 };
 
