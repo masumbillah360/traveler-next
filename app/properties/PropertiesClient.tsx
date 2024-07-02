@@ -24,7 +24,7 @@ const TripsClient = ({ listings, currentUser }: TripsClientProps) => {
     (id: string) => {
       setDeletingId(id);
       axios
-        .delete(`/api/listing/${id}`)
+        .delete(`/api/listings/${id}`)
         .then(() => {
           toast.success("Listing Deleted");
           router.refresh();
