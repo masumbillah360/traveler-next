@@ -7,10 +7,11 @@ import Navbar from "./components/shared/navbar/Navbar";
 
 import "./globals.css";
 
-import RegisterModal from "./components/modals/RegisterModal";
-import LoginModal from "./components/modals/LoginModal";
-import getCurrentUser from "./actions/getCurrentUser";
 import RentModal from "./components/modals/RentModal";
+import getCurrentUser from "./actions/getCurrentUser";
+import LoginModal from "./components/modals/LoginModal";
+import SearchModal from "./components/modals/SearchModal";
+import RegisterModal from "./components/modals/RegisterModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default async function RootLayout({
         <ToasterProvider />
         <RentModal />
         <LoginModal />
+        <SearchModal />
         <RegisterModal />
         <Navbar currentUser={currentUser} />
         <div className="pb-20 pt-28">{children}</div>

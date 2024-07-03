@@ -1,16 +1,19 @@
-import React from "react";
-import getCurrentUser from "../actions/getCurrentUser";
 import EmptyState from "../components/ui/EmptyState";
+import getCurrentUser from "../actions/getCurrentUser";
 import getReservation from "../actions/getReservation";
-import TripsClient from "./TripsClient";
+import ReservationsClient from "./ReservationsClient";
 
-const TripsPage = async () => {
+const ReserVationPage = async () => {
   const currentUser = await getCurrentUser();
   if (!currentUser) {
     return <EmptyState title="Unauthorized" subTitle="Please login first!" />;
   }
-  const reservations = await getReservation({ userId: currentUser?.id });
-  if (reservations.length === 0) {
+
+  const reservations = await getReservation({
+    authorId: currentUser.id
+  })
+
+  if(reservations.length === 0) {
     return (
       <EmptyState
         title="No Reservations"
@@ -18,8 +21,7 @@ const TripsPage = async () => {
       />
     );
   }
-  reservations[0].listing
-  return <TripsClient reservations={reservations} currentUser={currentUser} />;
+  return <ReservationsClient reservations={reservations} currentUser={currentUser} />;
 };
 
-export default TripsPage;
+export default ReserVationPage;

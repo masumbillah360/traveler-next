@@ -1,18 +1,18 @@
 "use client";
 
-import { Listing, Reservation, User } from "@prisma/client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { categories } from "../components/shared/navbar/Categories";
-import Container from "../components/ui/Container";
-import ListingHead from "./ListingHead";
-import ListingInfo from "./ListingInfo";
-import useLoginModal from "../hooks/useLoginModal";
-import { useRouter } from "next/navigation";
-import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
 import axios from "axios";
 import toast from "react-hot-toast";
-import ListingReservation from "./ListingReservation";
+import ListingHead from "./ListingHead";
+import ListingInfo from "./ListingInfo";
 import { Range } from "react-date-range";
+import { useRouter } from "next/navigation";
+import Container from "../components/ui/Container";
+import useLoginModal from "../hooks/useLoginModal";
+import ListingReservation from "./ListingReservation";
+import { Listing, Reservation, User } from "@prisma/client";
+import { categories } from "../components/shared/navbar/Categories";
+import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 export type ListingWithUser = Listing & { user: User };
 
@@ -66,9 +66,7 @@ const ListingClient = ({
       .then(() => {
         toast.success("Reservation created successfully!");
         setDateRange(initialDateRange);
-        // setTotalPrice(listing.price);
-        // router.push(`/listing/${listing.id}`);
-        router.refresh();
+        router.push(`/trips`);
       })
       .catch(() => {
         toast.error("Failed to create reservation");
